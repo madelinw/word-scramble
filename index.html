@@ -1,1 +1,59 @@
-Scramble
+<html>
+  <head>
+    <title>Scramble!</title>
+    <script src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+    <script src="http://underscorejs.org/underscore-min.js"></script>
+    <script src="index.js"></script>
+    <style type="text/css">
+      body {
+        font-family: Helvetica;
+      }
+      .wrapper {
+        text-transform: uppercase;
+        font-size: 52px;
+        margin: 0 auto;
+        text-align: center;
+        position: relative;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+      }
+
+      span {
+        width: 80px;
+        display: inline-block;
+        text-align: center;
+        padding: 15px 0;
+        color: #f0f0f0;
+      }
+
+      .scrambled {
+        display: inline-block;
+      }
+
+      .unscrambled {
+        display: inline-block;
+      }
+      .unscrambled span {
+        color: rgb(166, 226, 45);
+      }
+      .fail span {
+        color: rgb(249, 39, 114);
+      }
+
+      .points {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        font-size: 18px;
+        color: rgb(166, 226, 45);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="unscrambled"></div><!--
+      --><div class="scrambled"></div>
+    </div>
+    <div class="points"></div>
+  </body>
+</html>
