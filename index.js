@@ -5,7 +5,7 @@ function Scrambler() {
 
   API_KEY = "80dd0819727ea436a27020fb7ee060d58f98dbfd4d9c22770";
 
-  this.wordAPI = "http://api.wordnik.com:80/v4/words.json/randomWords?hasDictionaryDef=true&excludePartOfSpeech=proper-noun&minCorpusCount=10000&maxCorpusCount=-1&minDictionaryCount=10&maxDictionaryCount=-1&minLength=4&maxLength=6&limit=10&api_key=" + API_KEY;
+  this.wordAPI = "http://api.wordnik.com:80/v4/words.json/randomWords?hasDictionaryDef=true&excludePartOfSpeech=proper-noun&minCorpusCount=10000&maxCorpusCount=-1&minDictionaryCount=100&maxDictionaryCount=-1&minLength=4&maxLength=6&limit=10&api_key=" + API_KEY;
   this.words = [];
   this.points = 0;
   this.scrambledArray = [];
