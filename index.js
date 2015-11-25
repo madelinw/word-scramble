@@ -11,6 +11,7 @@ function Scrambler() {
   this.scrambledArray = [];
   this.unscrambledArray = [];
   this.dict = {};
+  this.failTimeout = null;
 }
 
 Scrambler.prototype.getCurrentWord = function(words) {
@@ -113,8 +114,23 @@ Scrambler.prototype.bindEvents = function() {
 
   this.mapCharactersToCodes();
 
-  $("body").keypress(function(e) {
+  $("body").keydown(function(e) {
+    // Capture deleted characters
+    if (e.which == 46 || e.which == 8) {
+      $(".unscrambled").removeClass("fail");
+      clearTimeout(self.failTimeout);
 
+      e.preventDefault();
+      var deletedChar = $(".unscrambled").children().last();
+      var deletedCharCode = deletedChar.html().charCodeAt(0);
+
+      deletedChar.prependTo(".scrambled");
+      self.dict[deletedCharCode] += 1
+      self.unscrambledArray.pop(String.fromCharCode(deletedCharCode));
+    }
+  });
+
+  $("body").keypress(function(e) {
     // If character is in letter & hasn't already been typed
     // Move typed character into unscrambled wrapper
     if ((_.has(self.dict, e.which)) && (self.dict[e.which] > 0)) {
@@ -122,7 +138,6 @@ Scrambler.prototype.bindEvents = function() {
       $(".letter-" + e.which + "-" + self.dict[e.which]).appendTo(".unscrambled")
       self.unscrambledArray.push(String.fromCharCode(e.which));
       self.dict[e.which] -= 1;
-
     }
 
     // When unscrambled container reaches length of word
@@ -146,14 +161,13 @@ Scrambler.prototype.bindEvents = function() {
         // if it doesnt... clear! start over.
         $(".unscrambled").addClass("fail");
 
-        setTimeout(function() {
+        self.failTimeout = setTimeout(function() {
           $(".unscrambled").removeClass("fail");
           $(".unscrambled").children().appendTo(".scrambled");
           self.unscrambledArray = [];
           self.mapCharactersToCodes();
           console.log("try again")
         }, 1000)
-
       }
   })
 }
