@@ -105,7 +105,7 @@ Scrambler.prototype.reset = function() {
 
   this.unscrambledArray = [];
   this.scrambledArray = [];
-  $("body").unbind("keypress");
+  $("body").unbind("keypress keydown");
 }
 
 // On keyup, move letter to new "unscrambled" container
@@ -117,16 +117,20 @@ Scrambler.prototype.bindEvents = function() {
   $("body").keydown(function(e) {
     // Capture deleted characters
     if (e.which == 46 || e.which == 8) {
-      $(".unscrambled").removeClass("fail");
-      clearTimeout(self.failTimeout);
-
       e.preventDefault();
-      var deletedChar = $(".unscrambled").children().last();
-      var deletedCharCode = deletedChar.html().charCodeAt(0);
 
-      deletedChar.prependTo(".scrambled");
-      self.dict[deletedCharCode] += 1
-      self.unscrambledArray.pop(String.fromCharCode(deletedCharCode));
+      if (self.unscrambledArray.length > 0) {
+        var deletedChar = $(".unscrambled").children().last();
+        var deletedCharCode = deletedChar.html().charCodeAt(0);
+
+        $(".unscrambled").removeClass("fail");
+        clearTimeout(self.failTimeout);
+
+        deletedChar.prependTo(".scrambled");
+        self.dict[deletedCharCode] += 1
+        self.unscrambledArray.pop(String.fromCharCode(deletedCharCode));
+      }
+
     }
   });
 
